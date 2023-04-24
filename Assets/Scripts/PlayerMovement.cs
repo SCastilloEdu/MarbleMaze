@@ -5,6 +5,7 @@ using System.Numerics;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement: MonoBehaviour {
 	
@@ -28,10 +29,15 @@ public class PlayerMovement: MonoBehaviour {
    public KeyCode leftKeyAlt = KeyCode.LeftArrow;
    public KeyCode rightKeyAlt = KeyCode.RightArrow;
 
-   IEnumerator wait(double sec) {
-      yield
-      return new WaitForSeconds(Convert.ToSingle(sec));
-   }
+	IEnumerator wait(double sec) {
+	  yield
+	  return new WaitForSeconds(Convert.ToSingle(sec));
+	}
+   
+	// void OnSceneLoaded()
+	// {
+		// transform.position = new Vector3(0f,0f,0f);
+	// }
 
    void FixedUpdate() {
       if (Input.GetKey(upKey) || Input.GetKey(upKeyAlt)) // Up
@@ -91,6 +97,11 @@ public class PlayerMovement: MonoBehaviour {
 		 moveForce = speed;
       } else {
 		 moveForce = speed/2;
+	  }
+	  if (rb.velocity.magnitude>50)
+	  {
+		  transform.position = new Vector3(0f,0f,0f);
+		  rb.velocity=new Vector3 (0f,0f,0f);
 	  }
    }
 
